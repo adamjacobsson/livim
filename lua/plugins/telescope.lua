@@ -10,14 +10,30 @@ return {
         vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
         vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
     	require("telescope").setup({
-        defaults = {
-          mappings = {
-            i = {
-              ["<S-Tab>"] = actions.move_selection_previous,
-              ["<Tab>"] = actions.move_selection_next,
-            }
-          }
-        },
-})
+            pickers = {
+                current_buffer_fuzzy_find = { sorting_strategy = 'ascending' },
+            },
+            defaults = {
+              sorting_strategy = "ascending",
+              mappings = {
+                i = {
+                  ["<S-Tab>"] = actions.move_selection_previous,
+                  ["<Tab>"] = actions.move_selection_next,
+                }
+              },
+              layout_config = {
+              horizontal = {
+                prompt_position = "top",
+                preview_width = 0.55,
+                results_width = 0.8,
+              },
+              vertical = {
+                mirror = false,
+              },
+              width = 0.87,
+              height = 0.80,
+              preview_cutoff = 120,
+            },
+         }})
     end
 }
