@@ -30,7 +30,7 @@ return {
       lspconfig.lua_ls.setup({
         capabilities = capabilities
       })
-      lspconfig.pyright.setup({
+      lspconfig.ruff.setup({
         capabilities = capabilities
       })
 
@@ -38,6 +38,7 @@ return {
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
       vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
       vim.keymap.set("n", "gc", vim.lsp.buf.code_action, {})
+      vim.keymap.set("n", "<leader>fc", vim.lsp.buf.format, {})
     end,
   },
 }
