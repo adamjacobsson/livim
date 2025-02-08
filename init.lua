@@ -1,6 +1,7 @@
 require("config.lazy")
 require("config.cmds")
 require("config.settings")
+require("config.indenting")
 
 vim.cmd("language en_US")
 vim.cmd.colorscheme "catppuccin-mocha"

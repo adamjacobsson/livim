@@ -24,10 +24,27 @@ return {
             lspconfig.ts_ls.setup({
                 capabilities = capabilities
             })
-            lspconfig.html.setup({
+            lspconfig.angularls.setup({
+                capabilities = capabilities,
+                cmd = {"ngserver", "--stdio", "--tsProbeLocations", "/opt/homebrew/lib/node_modules/@angular/language-server", "--ngProbeLocations", "/opt/homebrew/lib/node_modules/@angular/language-server"}
+                -- cmd = {
+                --     "ngserver",
+                --     '--stdio',
+                --     '--tsProbeLocations'}
+            })
+            -- lspconfig.html.setup({
+            --     capabilities = capabilities
+            -- })
+            lspconfig.eslint.setup({
                 capabilities = capabilities
             })
             lspconfig.lua_ls.setup({
+                capabilities = capabilities
+            })
+            lspconfig.nextls.setup({
+                capabilities = capabilities
+            })
+            lspconfig.cssls.setup({
                 capabilities = capabilities
             })
             lspconfig.ruff.setup({
