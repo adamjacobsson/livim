@@ -21,6 +21,7 @@ vim.keymap.set('n', '<leader>foc', ':set ft=csv_semicolon<CR>', { desc = 'toggle
 vim.keymap.set('n', '<leader>fop', ':set ft=csv_pipie<CR>', { desc = 'toggle explorer' })
 
 vim.keymap.set('n', '<leader>fodn', ':%s/\\%x00//g<CR>') -- delete null chars??
+vim.keymap.set('n', '<leader>b', ':DBUIToggle<CR>') -- delete null chars??
 --
 
 

@@ -1,49 +1,70 @@
 return {
-    {
-        "williamboman/mason.nvim",
-        lazy = false,
-        config = function()
-            require("mason").setup()
-        end,
+  {
+    "williamboman/mason.nvim",
+    lazy = false,
+    config = function()
+      require("mason").setup()
+    end,
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    lazy = false,
+    opts = {
+      auto_install = true,
+      ensure_installed = { "pyright", "ruff" },
     },
-    {
-        "williamboman/mason-lspconfig.nvim",
-        lazy = false,
-        opts = {
-            auto_install = true,
+  },
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = { "saghen/blink.cmp" },
+    lazy = false,
+
+    config = function()
+      local lsps = { "lua_ls", "cssls", "pyright", "ruff", "omnisharp" } -- INSERT LSPS HERE 
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
+
+      vim.lsp.config("*", {
+        capabilities = capabilities,
+      })
+
+      vim.lsp.config("omnisharp", {
+        cmd = { "omnisharp" },
+        root_markers = { "*.sln", "*.csproj" },
+      })
+
+      vim.lsp.config("pyright", {
+        settings = {
+          python = {
+            analysis = {
+              autoImportCompletions = true,
+              autoSearchPaths = true,
+              diagnosticMode = "workspace",
+              typeCheckingMode = "off",
+              useLibraryCodeForTypes = true,
+            },
+          },
         },
-    },
-    {
-        "neovim/nvim-lspconfig",
-        dependencies = { 'saghen/blink.cmp' },
-        lazy = false,
-        config = function()
-            local capabilities = require('blink.cmp').get_lsp_capabilities()
+      })
 
-            local lspconfig = require("lspconfig")
-            lspconfig.lua_ls.setup({
-                capabilities = capabilities
-            })
-            lspconfig.cssls.setup({
-                capabilities = capabilities
-            })
-            lspconfig.pylsp.setup({
-                capabilities = capabilities
-            })
-            lspconfig.ruff.setup({
-                capabilities = capabilities
-            })
-            lspconfig.omnisharp.setup {
-                capabilities = capabilities,
-                cmd = { "omnisharp" },
-                root_dir = lspconfig.util.root_pattern("*.sln", "*.csproj"),
+      vim.lsp.config("lua_ls", {
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { "vim" }
             }
+          }
+        }
+      })
 
-            vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-            vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-            vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
-            vim.keymap.set("n", "gc", vim.lsp.buf.code_action, {})
-            vim.keymap.set("n", "<leader>fc", vim.lsp.buf.format, {})
-        end,
-    },
+      for _, name in ipairs(lsps) do
+        vim.lsp.enable(name)
+      end
+
+      vim.keymap.set("n", "K",  vim.lsp.buf.hover, {})
+      vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
+      vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
+      vim.keymap.set("n", "gc", vim.lsp.buf.code_action, {})
+      vim.keymap.set("n", "<leader>fc", vim.lsp.buf.format, {})
+    end,
+  },
 }

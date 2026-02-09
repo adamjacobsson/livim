@@ -4,6 +4,13 @@ vim.api.nvim_command("autocmd VimResized * wincmd =")
 -- keep the gutter witdh constant
 vim.api.nvim_command("set signcolumn=yes")
 
+-- show diagnostics automatically when holding the cursor on a line
+vim.api.nvim_create_autocmd("CursorHold", {
+  callback = function()
+    vim.diagnostic.open_float(nil, { focus = false, scope = "line" })
+  end,
+})
+
 
 -- Set 2 spaces for JavaScript
 vim.cmd [[
@@ -54,5 +61,4 @@ vim.cmd [[
 vim.cmd [[
   autocmd FileType php setlocal shiftwidth=4 tabstop=4 softtabstop=4 expandtab
 ]]
-
 
