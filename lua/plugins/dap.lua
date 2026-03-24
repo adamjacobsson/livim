@@ -15,8 +15,9 @@ return {
                 layouts = {
                     {
                         elements = {
-                            { id = "scopes", size = 0.65 },
+                            -- Watches should appear at the top of the sidebar.
                             { id = "watches", size = 0.35 },
+                            { id = "scopes", size = 0.65 },
                         },
                         size = 40,
                         position = "left",

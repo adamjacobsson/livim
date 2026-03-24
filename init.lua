@@ -13,6 +13,8 @@ vim.opt.relativenumber = true
 vim.keymap.set('n', '<leader>q', ':q<CR>', { desc = 'quit' })
 vim.keymap.set('n', '<leader>w', ':w<CR>', { desc = 'write' })
 vim.keymap.set('i', 'jj', '<esc>')
+vim.keymap.set('n', 'u', 'u', { desc = 'undo' })
+vim.keymap.set('n', 'U', '<C-r>', { desc = 'redo' })
 
 vim.keymap.set('n', '<leader>e', '<cmd> NvimTreeFocus <CR>', { desc = 'toggle explorer' })
 vim.keymap.set('n', '<C-n>', '<cmd> NvimTreeToggle <CR>', { desc = 'toggle explorer' })

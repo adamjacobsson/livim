@@ -6,6 +6,25 @@ return {
     config = function()
         local actions = require("telescope.actions")
         local builtin = require('telescope.builtin')
+
+        local function open_split(prompt_bufnr, splitright)
+            local original = vim.o.splitright
+            vim.o.splitright = splitright
+            local ok, err = pcall(actions.select_vertical, prompt_bufnr)
+            vim.o.splitright = original
+            if not ok then
+                error(err)
+            end
+        end
+
+        local function open_split_right(prompt_bufnr)
+            open_split(prompt_bufnr, true)
+        end
+
+        local function open_split_left(prompt_bufnr)
+            open_split(prompt_bufnr, false)
+        end
+
         vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
         vim.keymap.set('n', '<leader>fw', builtin.live_grep, {})
         vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
@@ -24,7 +43,13 @@ return {
                     i = {
                         ["<S-Tab>"] = actions.move_selection_previous,
                         ["<Tab>"] = actions.move_selection_next,
-                    }
+                        ["<C-l>"] = open_split_right,
+                        ["<C-h>"] = open_split_left,
+                    },
+                    n = {
+                        ["<C-l>"] = open_split_right,
+                        ["<C-h>"] = open_split_left,
+                    },
                 },
                 layout_config = {
                     horizontal = {
