@@ -11,7 +11,16 @@ return {
     lazy = false,
     opts = {
       auto_install = true,
-      ensure_installed = { "pyright", "ruff" },
+      ensure_installed = {
+        "pyright",
+        "ruff",
+        "omnisharp",
+        "ts_ls",
+        "angularls",
+        "cssls",
+        "html",
+        "jsonls",
+      },
     },
   },
   {
@@ -20,16 +29,62 @@ return {
     lazy = false,
 
     config = function()
-      local lsps = { "lua_ls", "cssls", "pyright", "ruff", "omnisharp" } -- INSERT LSPS HERE 
+      local util = require("lspconfig.util")
+      local lsps = {
+        "lua_ls",
+        "cssls",
+        "pyright",
+        "ruff",
+        "omnisharp",
+        "ts_ls",
+        "angularls",
+        "jsonls",
+        "html",
+      } -- INSERT LSPS HERE 
       local capabilities = require("blink.cmp").get_lsp_capabilities()
 
       vim.lsp.config("*", {
         capabilities = capabilities,
       })
 
+      local omnisharp_bin = vim.fn.executable("OmniSharp") == 1 and "OmniSharp" or "omnisharp"
+
       vim.lsp.config("omnisharp", {
-        cmd = { "omnisharp" },
-        root_markers = { "*.sln", "*.csproj" },
+        cmd = {
+          omnisharp_bin,
+          "-z",
+          "--hostPID",
+          tostring(vim.fn.getpid()),
+          "DotNet:enablePackageRestore=false",
+          "--encoding",
+          "utf-8",
+          "--languageserver",
+        },
+        filetypes = { "cs", "vb" },
+        root_dir = function(bufnr, on_dir)
+          local fname = vim.api.nvim_buf_get_name(bufnr)
+          on_dir(
+            util.root_pattern("*.slnx")(fname)
+            or util.root_pattern("*.sln")(fname)
+            or util.root_pattern("*.csproj")(fname)
+            or util.root_pattern("omnisharp.json")(fname)
+            or util.root_pattern("function.json")(fname)
+          )
+        end,
+        settings = {
+          FormattingOptions = {
+            EnableEditorConfigSupport = true,
+            OrganizeImports = true,
+          },
+          RoslynExtensionsOptions = {
+            EnableImportCompletion = true,
+            EnableAnalyzersSupport = true,
+            AnalyzeOpenDocumentsOnly = false,
+          },
+        },
+        capabilities = {
+          workspace = { workspaceFolders = false },
+        },
       })
 
       vim.lsp.config("pyright", {

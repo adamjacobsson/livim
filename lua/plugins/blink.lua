@@ -39,6 +39,19 @@ return {
         cmdline = {},
         sources = {
             default = { 'lsp', 'path', 'snippets', 'buffer' },
+            per_filetype = {
+                sql = { 'snippets', 'dadbod', 'buffer' },
+                mysql = { 'snippets', 'dadbod', 'buffer' },
+                plsql = { 'snippets', 'dadbod', 'buffer' },
+                dbui = { 'dadbod', 'buffer' },
+                dbout = { 'dadbod', 'buffer' },
+            },
+            providers = {
+                dadbod = {
+                    name = 'Dadbod',
+                    module = 'vim_dadbod_completion.blink',
+                },
+            },
 
         },
 

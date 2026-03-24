@@ -16,6 +16,10 @@ return {
             },
             defaults = {
                 sorting_strategy = "ascending",
+                file_ignore_patterns = {
+                    "%.venv/",
+                    "venv/",
+                },
                 mappings = {
                     i = {
                         ["<S-Tab>"] = actions.move_selection_previous,
