@@ -19,8 +19,8 @@ vim.keymap.set('n', 'U', '<C-r>', { desc = 'redo' })
 vim.keymap.set('n', '<leader>e', '<cmd> NvimTreeFocus <CR>', { desc = 'toggle explorer' })
 vim.keymap.set('n', '<C-n>', '<cmd> NvimTreeToggle <CR>', { desc = 'toggle explorer' })
 
-vim.keymap.set('n', '<Tab>', ':bnext<CR>', { desc = 'next buffer' })
-vim.keymap.set('n', '<S-Tab>', ':bprevious<CR>', { desc = 'previous buffer' })
+vim.keymap.set('n', '<Tab>', '<cmd>bnext<CR>', { desc = 'next buffer' })
+vim.keymap.set('n', '<S-Tab>', '<cmd>bprevious<CR>', { desc = 'previous buffer' })
 
 vim.keymap.set('n', '<leader>foc', ':set ft=csv_semicolon<CR>', { desc = 'toggle explorer' })
 vim.keymap.set('n', '<leader>fop', ':set ft=csv_pipie<CR>', { desc = 'toggle explorer' })

@@ -38,6 +38,7 @@ return {
                 file_ignore_patterns = {
                     "%.venv/",
                     "venv/",
+                    "__pycache__/",
                 },
                 mappings = {
                     i = {
